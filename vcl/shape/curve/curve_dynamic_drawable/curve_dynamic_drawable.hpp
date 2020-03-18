@@ -15,6 +15,9 @@ public:
 
     curve_dynamic_drawable(size_t max_size = 20);
 
+    /** Clear all stored points */
+    void clear();
+
     /** Add a new point (remove older one to keep a size <= max_size) */
     void add_point(const vec3& p);
 

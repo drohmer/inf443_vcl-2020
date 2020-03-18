@@ -47,11 +47,15 @@ timer_interval::timer_interval()
 
 float timer_interval::update()
 {
-    const float dt = timer_basic::update();
-    assert(dt<t_max-t_min);
+    assert(t_max>t_min);
 
-    if( t>=t_max )
+    float dt = timer_basic::update();
+    if( dt>t_max-t_min )
+        dt = 0;
+
+    while( t>=t_max )
         t -= (t_max-t_min);
+
     assert(t>=t_min && t<t_max);
 
     return dt;

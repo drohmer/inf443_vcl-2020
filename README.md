@@ -1,37 +1,116 @@
-# INF585 VCL
+# VCL
 
-## Setup compilation in command line using the Makefile (in Linux only)
+## Introduction
 
-$ make
+VCL - Visual Computing Library - is a simple lightweight library on top of OpenGL provided to ease learning of 3D programming while avoiding re-coding everything from scratch (matrices, mesh structures, etc.). The library provides several helper structure and functions to set up 3D scene with interactive and/or animated elements.
 
-$ ./pgm
+The objective of the library is to be simple as simple as possible to read and use.
+Majority of VCL structures and functions are aimed to be minimalistic without hidden states. The code remains fully compatible with direct raw OpenGL calls and user defined shaders. The animation loop itself be entirely defined by the user.
 
-## Setup compilation in command line using CMake (in Linux/MacOs)
+The code contains two main parts:
+* The VCL library itself in `vcl/` directory - contains the helper functions and structures
+* Some example 3D scenes in `scenes/` directory. Each scene is fully defined in its subdirectory, and the switch between different scene is set using a keyword defined in `scene/current_scene.hpp` file.
 
-This step create the build directory, call CMake to generate the Makefile, compile and execute the code. Note that the creation of the build directory and CMake call has to be done only once on a given system.
 
-The following command assume you have opened a command line in the directory vcl/
+## Compiling and executing the library on Linux/MacOS
 
-### Create a build directory
+The only external dependency of VCL is [GLFW](https://www.glfw.org/).
 
-$ mkdir build
+The compilation can be done either using the provided Makefile or CMakeLists.txt (CMake).
 
-$ cd build
 
-### Execute CMake, compile
+In Linux/MacOS, the following commands should compile and execute the code (assuming your command line is opened in the root directory of the library).
 
-$ cmake ..
 
-$ make
+__Using Make__
+```shell
+make
+./pgm
+```
 
-$ cd ..
+__Using CMake__
+```shell
+mkdir build
+cd build
+cmake ..
+make
+cd ..
+build/pgm
+```
 
-### Execute
+Note that the executable should be run from the root directory. 
 
-$ build/pgm
+_More precisely, the data (shaders and assets) defined in the scenes/ directory should be accessible from the running directory as files are read from this relative path._
 
-(note: the build directory is temporary and can be removed safely when switching between different computers)
 
+
+### Setting up a computer running on Ubuntu
+
+In the case you need to set up a personnal computer on Linux/Ubuntu from scratch, you may follow these steps
+
+```shell
+# Basic development tools (g++, make, etc)
+sudo apt-get install build-essential
+
+# CMake 
+sudo apt-get install cmake 
+
+# GLFW
+sudo apt-get install glfw3-dev
+
+# [Optionnal] QtCreator to edit files
+sudo apt-get install qtcreator
+```
+
+
+
+### Setting up a computer running on MacOS
+
+In the case you need to set up a personnal computer on MacOS from scratch, you may follow these steps
+
+Check first that g++/clang++ is installed in typing in command line
+
+```shell
+g++ -v
+```
+
+(Follow the installation instruction if the OS propose to install it).
+
+For the other dependencies, the easiest way is to use the package manager [Homebrew](https://brew.sh/). Follow the instructions of the website to install it.
+
+Then install the necessary software and libraries
+
+```shell
+# The Library GLFW
+brew install glfw
+
+# CMake tool to compile
+brew install cmake
+
+# [Optionnal] QtCreator to edit files
+brew cask install qt-creator
+```
+
+
+## Setting up QtCreator to compile and execute the code on Linux or MacOS
+
+
+
+TBD
+
+## Compiling and executing the code on Windows
+
+TBD
+
+
+## Basic usage of VCL
+
+TBD
+
+
+
+
+<!-- 
 ### Note on Compilation / Execution 
 
 When editing the source code (without adding/removing files), you don't need to run CMake every time, but only call Makefile. The following command can be used from the vcl/ directory:
@@ -59,4 +138,4 @@ By default, a temporary directory build-cmake-Desktop-Default is created (in the
 
 - Use CMakeLists.txt with Visual Studio
 - Precompiled version of GLFW3 is provided (precompiled/glfw3_win)
-- You need to copy data/ and shaders/ directories in the executable directory
+- You need to copy data/ and shaders/ directories in the executable directory -->

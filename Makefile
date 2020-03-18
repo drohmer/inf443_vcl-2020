@@ -1,4 +1,4 @@
-TARGET ?= scene
+TARGET ?= pgm
 SRC_DIRS ?= .
 
 CXX ?= g++

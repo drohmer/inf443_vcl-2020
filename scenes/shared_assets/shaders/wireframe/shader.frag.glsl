@@ -7,8 +7,9 @@ in struct fragment_data
 
 
 out vec4 FragColor;
+uniform vec4 wireframe_color = vec4(0.0, 0.0, 0.5, 1.0);
 
 void main()
 {
-    FragColor = vec4(0.0, 0.0, 0.5, 1.0);
+    FragColor = wireframe_color;
 }

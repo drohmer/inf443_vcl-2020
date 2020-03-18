@@ -9,6 +9,12 @@ curve_dynamic_drawable::curve_dynamic_drawable(size_t max_size_arg)
 {
 }
 
+void curve_dynamic_drawable::clear()
+{
+    position_stored.clear();
+    need_update = true;
+}
+
 void curve_dynamic_drawable::add_point(const vec3& p)
 {
     need_update = true;

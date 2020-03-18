@@ -53,10 +53,12 @@ hierarchy_mesh_drawable_node& hierarchy_mesh_drawable::operator[](const std::str
     if(it==name_map.end())
     {
         std::cerr<<"Error: cannot find element ["<<name<<"] in hierarchy_mesh_drawable"<<std::endl;
+        std::cerr<<"Possibles element names are: ";
+        for( auto const& s : name_map ) { std::cerr<<"["<<s.first<<"] "; }
         abort();
     }
     const size_t index = it->second;
-    assert(index<elements.size());
+    assert_vcl_no_msg(index<elements.size());
 
     return elements[index];
 }
@@ -66,10 +68,13 @@ const hierarchy_mesh_drawable_node& hierarchy_mesh_drawable::operator[](const st
     if(it==name_map.end())
     {
         std::cerr<<"Error: cannot find element ["<<name<<"] in hierarchy_mesh_drawable"<<std::endl;
+        std::cerr<<"Possibles element names are: ";
+        for( auto const& s : name_map ) { std::cerr<<"["<<s.first<<"] "; }
         abort();
     }
+
     const size_t index = it->second;
-    assert(elements.size()<index);
+    assert_vcl_no_msg(index<elements.size());
 
     return elements[index];
 }
@@ -79,7 +84,7 @@ const hierarchy_mesh_drawable_node& hierarchy_mesh_drawable::operator[](const st
 
 void hierarchy_mesh_drawable::update_local_to_global_coordinates()
 {
-    assert(elements.size()>0);
+    assert_vcl_no_msg(elements.size()>0);
 
     assert_valid_hierarchy(*this);
 
@@ -100,16 +105,14 @@ void hierarchy_mesh_drawable::update_local_to_global_coordinates()
         else
         {
             const affine_transform& local = element.transform;
-            affine_transform& global = element.global_transform;
             const affine_transform& global_parent = (*this)[parent_name].global_transform;
 
-            global.rotation = global_parent.rotation * local.rotation;
-            global.translation = global_parent.rotation * local.translation + global_parent.translation;
+            element.global_transform = global_parent * local;
         }
     }
 }
 
-void draw(const hierarchy_mesh_drawable& hierarchy, const camera_scene& camera)
+void draw(const hierarchy_mesh_drawable& hierarchy, const camera_scene& camera, int shader)
 {
     const size_t N = hierarchy.elements.size();
     for(size_t k=0; k<N; ++k)
@@ -120,12 +123,13 @@ void draw(const hierarchy_mesh_drawable& hierarchy, const camera_scene& camera)
         mesh_drawable visual_element = node.element;
         const affine_transform& T = node.global_transform;
 
-        // Update local uniform values
-        visual_element.uniform.transform.rotation    = T.rotation * visual_element.uniform.transform.rotation;
-        visual_element.uniform.transform.translation = T.translation + visual_element.uniform.transform.translation;
+        // Update local uniform values (and combine them with uniform already stored in the mesh)
+        visual_element.uniform.transform = T * visual_element.uniform.transform;
 
-
-        vcl::draw(visual_element, camera);
+        if(shader==-1) // Use the shader associated to the current visual_element
+            vcl::draw(visual_element, camera);
+        else // use the shader set in the argument
+            vcl::draw(visual_element, camera, shader);
     }
 }
 
@@ -201,17 +205,6 @@ void assert_valid_hierarchy(const hierarchy_mesh_drawable& hierarchy)
 }
 
 
-//void hierarchy_mesh_drawable::add(const mesh_drawable& element,
-//                                  const std::string& name,
-//                                  const std::string& name_parent,
-//                                  const vec3& translation = {0,0,0},
-//                                  const mat3& rotation = mat3::identity())
-//{
-//    hierarchy_mesh_drawable_node
-
-//    // Store correspondance between index and name
-//    name_map
-//}
 
 
 }

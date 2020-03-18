@@ -2,6 +2,7 @@
 
 #include "vcl/shape/mesh/mesh_drawable/mesh_drawable.hpp"
 #include "hierarchy_mesh_drawable_node/hierarchy_mesh_drawable_node.hpp"
+#include "hierarchy_mesh_drawable_display_skeleton/hierarchy_mesh_drawable_display_skeleton.hpp"
 
 #include <map>
 
@@ -53,6 +54,12 @@ struct hierarchy_mesh_drawable
 
 };
 
-void draw(const hierarchy_mesh_drawable& hierarchy, const camera_scene& camera);
+/** Display all the elements of the hierarchy
+    Assume that the hierarchy has updated global coordinates
+    The third argument "shader" is optionnal
+      - shader  = -1 (default) indicates to use the shader associated to each element
+      - shader != -1 force the use of this shader for all elements
+*/
+void draw(const hierarchy_mesh_drawable& hierarchy, const camera_scene& camera, int shader=-1);
 
 }

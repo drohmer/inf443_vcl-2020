@@ -4,6 +4,16 @@
 
 #ifdef SCENE_INTERPOLATION_POSITION
 
+// Store a vec3 (p) + time (t)
+struct vec3t{
+    vcl::vec3 p; // position
+    float t;     // time
+};
+
+struct gui_scene_structure{
+    bool display_keyframe = true;
+    bool display_polygon  = true;
+};
 
 struct scene_model : scene_base
 {
@@ -19,18 +29,20 @@ struct scene_model : scene_base
     void mouse_move(scene_structure& scene, GLFWwindow* window);
 
     // Data (p_i,t_i)
-    std::vector<vcl::vec3> keyframe_position; // Given positions
-    std::vector<float> keyframe_time;         // Time at given positions
+    vcl::buffer<vec3t> keyframes; // Given (position,time)
 
-    vcl::mesh_drawable surface;                            // moving point
-    vcl::mesh_drawable sphere;                             // keyframe samples
+    vcl::mesh_drawable point_visual;                       // moving point
+    vcl::mesh_drawable keyframe_visual;                    // keyframe samples
+    vcl::mesh_drawable keyframe_picked;                    // showing the picked sample
     vcl::segment_drawable_immediate_mode segment_drawer;   // used to draw segments between keyframe samples
     vcl::curve_dynamic_drawable trajectory;                // Draw the trajectory of the moving point as a curve
 
     // Store the index of a selected sphere
     int picked_object;
 
+    gui_scene_structure gui_scene;
     vcl::timer_interval timer;
+
 };
 
 #endif

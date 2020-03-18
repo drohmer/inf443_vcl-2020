@@ -27,6 +27,7 @@ struct scene_model : scene_base
     //  Surface is a class attribute to be initialized in setup_data and used in frame_draw
     vcl::mesh_drawable surface;
 
+
 };
 
 #endif
