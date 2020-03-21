@@ -1,5 +1,6 @@
 # VCL
 
+
 ## Introduction
 
 VCL - Visual Computing Library - is a simple lightweight library on top of OpenGL provided to ease learning of 3D programming while avoiding re-coding everything from scratch (matrices, mesh structures, etc.). The library provides several helper structure and functions to set up 3D scene with interactive and/or animated elements.
@@ -13,6 +14,8 @@ The code contains two main parts:
 
 
 ## Compiling and executing the library on Linux/MacOS
+
+
 
 The only external dependency of VCL is [GLFW](https://www.glfw.org/).
 
@@ -42,6 +45,10 @@ Note that the executable should be run from the root directory.
 
 _More precisely, the data (shaders and assets) defined in the scenes/ directory should be accessible from the running directory as files are read from this relative path._
 
+
+<br>
+
+Follow this link to code and load the project with QtCreator: [Setting up and using QtCreator](doc/qtcreator.md)
 
 
 ### Setting up a computer running on Ubuntu
@@ -92,11 +99,9 @@ brew cask install qt-creator
 ```
 
 
-## Setting up QtCreator to compile and execute the code on Linux or MacOS
 
 
 
-TBD
 
 ## Compiling and executing the code on Windows
 
