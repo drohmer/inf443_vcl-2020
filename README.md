@@ -13,104 +13,39 @@ The code contains two main parts:
 * Some example 3D scenes in `scenes/` directory. Each scene is fully defined in its subdirectory, and the switch between different scene is set using a keyword defined in `scene/current_scene.hpp` file.
 
 
-## Compiling and executing the library on Linux/MacOS
+## Compile the library
 
 
+The compilation can be done either using the provided
+* **Makefile**: Linux/MacOS only 
+* **CMakeLists.txt** using CMake (Linux/MacOS/Windows)
 
-The only external dependency of VCL is [GLFW](https://www.glfw.org/).
-
-The compilation can be done either using the provided Makefile or CMakeLists.txt (CMake).
-
-
-In Linux/MacOS, the following commands should compile and execute the code (assuming your command line is opened in the root directory of the library).
+The library has one externel dependency: [GLFW](https://www.glfw.org/) which can be installed through standard packages in Linux/MacOS (see detailed tutorials).
 
 
-__Using Make__
-```shell
-make
-./pgm
-```
-
-__Using CMake__
-```shell
-mkdir build
-cd build
-cmake ..
-make
-cd ..
-build/pgm
-```
-
-Note that the executable should be run from the root directory. 
-
-_More precisely, the data (shaders and assets) defined in the scenes/ directory should be accessible from the running directory as files are read from this relative path._
+* [Command lines to compile in Linux/MacOS](doc/compilation.md#command_line)
+* Detailed tutorials to set up your system and compile on
+  * [Linux/Ubuntu](doc/compilation.md#Ubuntu)
+  * [MacOS](doc/compilation.md#MacOS)
+  * Windows (coming soon)
 
 
-<br>
-
-Follow this link to code and load the project with QtCreator: [Setting up and using QtCreator](doc/qtcreator.md)
-
-
-### Setting up a computer running on Ubuntu
-
-In the case you need to set up a personnal computer on Linux/Ubuntu from scratch, you may follow these steps
-
-```shell
-# Basic development tools (g++, make, etc)
-sudo apt-get install build-essential
-
-# CMake 
-sudo apt-get install cmake 
-
-# GLFW
-sudo apt-get install glfw3-dev
-
-# [Optionnal] QtCreator to edit files
-sudo apt-get install qtcreator
-```
-
-
-
-### Setting up a computer running on MacOS
-
-In the case you need to set up a personnal computer on MacOS from scratch, you may follow these steps
-
-Check first that g++/clang++ is installed in typing in command line
-
-```shell
-g++ -v
-```
-
-(Follow the installation instruction if the OS propose to install it).
-
-For the other dependencies, the easiest way is to use the package manager [Homebrew](https://brew.sh/). Follow the instructions of the website to install it.
-
-Then install the necessary software and libraries
-
-```shell
-# The Library GLFW
-brew install glfw
-
-# CMake tool to compile
-brew install cmake
-
-# [Optionnal] QtCreator to edit files
-brew cask install qt-creator
-```
+You may edit the code using
+* QtCreator on Linux/MacOS: [Setting up and using QtCreator](doc/qtcreator.md)
+* Visual Studio on Windows
 
 
 
 
 
 
-## Compiling and executing the code on Windows
 
-TBD
+
 
 
 ## Basic usage of VCL
 
-TBD
+Coming soon ...
 
 
 
