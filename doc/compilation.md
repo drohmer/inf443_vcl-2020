@@ -114,8 +114,4 @@ Then follow
 
 ## Windows
 
-
-First step: install [Visual Studio](https://visualstudio.microsoft.com/vs/) (note: Visual Studio is a large IDE, do not confound it with Visual Studio Code))
-
-
-Coming soon ...
+[Compilation with Visual Studio](visual_studio.md)

@@ -35,7 +35,7 @@ The library has one external dependency: [GLFW](https://www.glfw.org/) which can
 * **Detailed tutorials** to set up your system and compile on
   * [Linux/Ubuntu](doc/compilation.md#Ubuntu)
   * [MacOS](doc/compilation.md#MacOS)
-  * Windows (coming soon)
+  * [Windows](doc/visual_studio.md)
 
 
 
@@ -45,19 +45,16 @@ You may edit the code using
 
 
 
-
-
-
-
-
-
-
-
 ## Basic usage of VCL
+
+<!-- Basic structure and functions associated to 2/3/4D vectors and matrices are provided. -->
+
 
 
 Coming soon ...
 
+
+<!-- ### Doxygen Documentation -->
 
 
 

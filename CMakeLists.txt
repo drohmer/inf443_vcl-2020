@@ -13,6 +13,7 @@ endif()
 
 # In Window set directory to precompiled version of glfw3
 if(WIN32)
+    set(CMAKE_BUILD_TYPE Debug) # Switch to Release for faster execution
     set(GLFW_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib_windows/glfw3_win/include")
     include_directories(${GLFW_INCLUDE_DIRS})
     set(GLFW_LIBRARIES "${CMAKE_CURRENT_SOURCE_DIR}/lib_windows/glfw3_win/lib/glfw3.lib")
