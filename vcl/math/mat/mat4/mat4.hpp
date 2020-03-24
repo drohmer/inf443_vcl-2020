@@ -25,8 +25,11 @@ template <> struct mat<4,4> {
              float wx,float wy,float wz,float ww);
     mat<4,4>(const vcl::mat3& R, const vcl::vec3& t);
 
+    /** Generate identity matrix */
     static mat4 identity();
+    /** Matrix filled with zeros */
     static mat4 zero();
+    /** Generate standard OpenGL-type perspective matrix */
     static mat4 perspective(float angle_of_view, float image_aspect, float z_near, float z_far);
     /**
      * Return the block matrix
