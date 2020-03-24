@@ -1,7 +1,15 @@
 # VCL
 
+- [Introduction](#Introduction)
+- [Compile the library](#Compilation)
+- [Basic usage of VCL structures](#Usage)
+  - [Vec](#vec)
+  - [Mat](#mat)
+  - [Transformations](#Transformations)
+  - [Buffers](#Buffers)
 
 
+<a name="Introduction"></a>
 ## Introduction
 
 
@@ -17,7 +25,7 @@ The code contains two main parts:
 * Some example 3D scenes in `scenes/` directory. Each scene is fully defined in its subdirectory, and the switch between different scene is set using a keyword defined in `scene/current_scene.hpp` file.
 
 
-
+<a name="Compilation"></a>
 ## Compile the library
 
 
@@ -44,10 +52,11 @@ You may edit the code using
 * Visual Studio on Windows
 
 
-
+<a name="Usage"></a>
 ## Basic usage of VCL structures
 
 
+<a name="vec"></a>
 ### vec
 
 Basic structure and functions associated to 2/3/4D vectors are provided as `vec2`, `vec3` and `vec4` (following mostly GLSL naming convention).
@@ -122,6 +131,7 @@ float f = norm(a);      // norm ||a|| = sqrt(dot(a,a))
 vec3  g = normalize(a); // return the unit norm vector a / ||a||
 ```
 
+<a name="mat"></a>
 ### mat
 
 Similarily to vectors, the library provide `mat2`, `mat3` and `mat4` structure (also following GLSL naming convention). 
@@ -172,6 +182,7 @@ vec3 r1 = A.row(1); // second row   = {3, 4.1, 1.5}
 // A[8] == 3.5f
 ```
 
+<a name="Transformations"></a>
 ### Transformations
 
 `mat3` can be used to store linear transformation (such as rotation), while `mat4` can store general affine transform.
@@ -229,6 +240,7 @@ static mat4 from_mat3(const vcl::mat3& m);
 static mat4 from_translation(const vcl::vec3& t);
 ```
 
+<a name="Buffers"></a>
 ### Buffers
 
 #### Dynamic 1D buffer
