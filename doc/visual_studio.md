@@ -9,7 +9,7 @@ If you haven't installed it yet, download and install the two following software
 
 * [CMake](https://cmake.org/)
 * [Visual Studio](https://visualstudio.microsoft.com/vs/)
-
+** Make sure you select the options to compile C++ and to use CMake during the installation procedure.
 
 
 The tutorial expect that you have Visual Studio 2019 (community edition - free for students and open source project). <br>
