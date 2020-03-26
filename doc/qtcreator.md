@@ -38,22 +38,27 @@ You can also use a more minimalistic text editor (Visual Studio Code, Emacs, Vim
 ## 1. Load project in QtCreator
 
 
-Open a command line on the root directory (the directory that contains the file CMakeLists.txt)
-
-
+In **Linux**, you can either 
+* open a command line on the root directory (the directory that contains the file CMakeLists.txt) and type
 ```shell
 qtcreator CmakeLists.txt &
 ```
+* or start QtCreator from you application startup panel and then follow
+  * **File** -> **Open File or Project** -> [look for the file CMakeLists.txt]
+
+<br>
+
+In **MacOS** you will have to open QtCreator from your launchpad and then follow 
+  * **File** -> **Open File or Project** -> [look for the file CMakeLists.txt] <br>
+
+<br>
 
 
 ![](assets/qtcreator/01_load_qtcreator.gif)
 
 
 
-QtCreator should propose to configure the project. Once it is done, you will have access to the hierarchy of files from the left panel.
-
-
-Alternatively, you may also open QtCreator from your application startup panel, and then open the CMakeLists.txt from it: File -> Open File or Projects -> then look for your CMakeLists.txt file.
+Whichever method you use, QtCreator should propose to configure the project. Once it is done, you will have access to the hierarchy of files from the left panel.
 
 
 Check here if you experience problems loading the project: [Common Issues](#issue).
