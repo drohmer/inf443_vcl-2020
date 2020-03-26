@@ -12,72 +12,112 @@
 namespace vcl
 {
 
+/** \brief Container for 2D-grid like structure storing numerical element
+ *
+ * The buffer2D structure provide convenient access for 2D-grid organization where an element can be queried as buffer2D(i,j).
+ * Elements of buffer2D are stored contiguously in memory and remain fully compatible with std::vector and pointers.
+ */
 template <typename T>
 struct buffer2D
 {
+    /** 2D dimension (Nx,Ny) of the container */
     size_t2 dimension;
+    /** Internal storage as a 1D buffer */
     buffer<T> data;
 
-    buffer2D();
-    buffer2D(size_t size);
-    buffer2D(size_t2 const& size);
-    buffer2D(size_t size_1, size_t size_2);
+    /** \name Constructors
+     * \brief  Follows the syntax from std::vector */
+    ///@{
+    buffer2D();                              /**< Empty buffer - no elements */
+    buffer2D(size_t size);                   /**< Build a buffer2D of squared dimension (size,size) */
+    buffer2D(size_t2 const& size);           /**< Build a buffer2D with specified dimension */
+    buffer2D(size_t size_1, size_t size_2);  /**< Build a buffer2D with specified dimension */
+    ///@}
 
 
+    /** Remove all elements from the buffer2D */
     void clear();
+    /** Total number of elements size = dimension[0] * dimension[1] */
     size_t size() const;
-    void resize(size_t size); // Create a square buffer2D of dimension NxN
-    void resize(size_t2 const& size);
-    void resize(size_t size_1, size_t size_2);
+    /** Fill all elements of the buffer2D with the same element*/
     void fill(T const& value);
 
-    T const& operator[](size_t const& index) const;
-    T & operator[](size_t const& index);
-    T const& operator()(size_t const& index) const;
-    T & operator()(size_t const& index);
+    /** \name Resizing buffer2D */
+    ///@{
+    void resize(size_t size);         /**< Create a squared buffer2D of dimension (size,size) */
+    void resize(size_t2 const& size);
+    void resize(size_t size_1, size_t size_2);
+    ///@}
 
-    T const& operator[](size_t2 const& index) const;
-    T & operator[](size_t2 const& index);
-    T const& operator()(size_t2 const& index) const;
-    T & operator()(size_t2 const& index);
-    T const& operator()(size_t k1, size_t k2) const;
-    T & operator()(size_t k1, size_t k2);
+    /** \name Element access
+     * Bound checking is performed unless VCL_NO_DEBUG is defined. */
+    ///@{
+    T const& operator[](size_t const& index) const; /**< Index as an offset in the 1D structure */
+    T & operator[](size_t const& index);            /**< Index as an offset in the 1D structure */
+    T const& operator()(size_t const& index) const; /**< Index as an offset in the 1D structure */
+    T & operator()(size_t const& index);            /**< Index as an offset in the 1D structure */
 
+    T const& operator[](size_t2 const& index) const; /**< buffer2D[ {x,y} ] */
+    T & operator[](size_t2 const& index);            /**< buffer2D[ {x,y} ] */
+    T const& operator()(size_t2 const& index) const; /**< buffer2D( {x,y} ) */
+    T & operator()(size_t2 const& index);            /**< buffer2D( {x,y} ) */
+    T const& operator()(size_t k1, size_t k2) const; /**< buffer2D(x, y) */
+    T & operator()(size_t k1, size_t k2);            /**< buffer2D(x, y) */
+    ///@}
+
+    /** \name Iterators
+     * \brief 1D-type iterators on buffer2D are compatible with STL syntax
+     * allows "forall" loops (for(auto& e : buffer) {...}) */
+    ///@{
     typename std::vector<T>::iterator begin();
     typename std::vector<T>::iterator end();
     typename std::vector<T>::const_iterator begin() const;
     typename std::vector<T>::const_iterator end() const;
     typename std::vector<T>::const_iterator cbegin() const;
     typename std::vector<T>::const_iterator cend() const;
+    ///@}
 };
 
+/** Display all elements of the buffer. \relates buffer */
 template <typename T> std::ostream& operator<<(std::ostream& s, buffer2D<T> const& v);
+
+/** Convert all elements of the buffer to a string.
+ * \param buffer: the input buffer
+ * \param separator: the separator between each element
+ * \relates buffer*/
 template <typename T> std::string to_string(buffer2D<T> const& v, std::string const& separator=" ");
 
-template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, T const& b);
-template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, T const& b);
-template <typename T> buffer2D<T>  operator+(T const& a, buffer2D<T> const& b);
+/** \name Math operators
+ * \brief Common mathematical operations between buffers, and scalar or element values. */
+///@{
+/** \relates buffer */ template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, T const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, T const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator+(T const& a, buffer2D<T> const& b);
 
-template <typename T> buffer2D<T>& operator-=(buffer2D<T>& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>& operator-=(buffer2D<T>& a, T const& b);
-template <typename T> buffer2D<T>  operator-(buffer2D<T> const& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>  operator-(buffer2D<T> const& a, T const& b);
-template <typename T> buffer2D<T>  operator-(T const& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator-=(buffer2D<T>& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator-=(buffer2D<T>& a, T const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator-(buffer2D<T> const& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator-(buffer2D<T> const& a, T const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator-(T const& a, buffer2D<T> const& b);
 
-template <typename T> buffer2D<T>& operator*=(buffer2D<T>& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>& operator*=(buffer2D<T>& a, float b);
-template <typename T> buffer2D<T>  operator*(buffer2D<T> const& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>  operator*(buffer2D<T> const& a, float b);
-template <typename T> buffer2D<T>  operator*(float a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator*=(buffer2D<T>& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator*=(buffer2D<T>& a, float b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator*(buffer2D<T> const& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator*(buffer2D<T> const& a, float b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator*(float a, buffer2D<T> const& b);
 
-template <typename T> buffer2D<T>& operator/=(buffer2D<T>& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>& operator/=(buffer2D<T>& a, float b);
-template <typename T> buffer2D<T>  operator/(buffer2D<T> const& a, buffer2D<T> const& b);
-template <typename T> buffer2D<T>  operator/(buffer2D<T> const& a, float b);
-template <typename T> buffer2D<T>  operator/(float a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator/=(buffer2D<T>& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>& operator/=(buffer2D<T>& a, float b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator/(buffer2D<T> const& a, buffer2D<T> const& b);
+/** \relates buffer */ template <typename T> buffer2D<T>  operator/(buffer2D<T> const& a, float b);
+///@}
 
+/** Direct build a buffer2D from a given 1D-buffer and its 2D-dimension
+ * \note: the size of the 1D-buffer must satisfy arg.size = size_1 * size_2
+ * \relates buffer
+*/
 template <typename T> buffer2D<T> buffer2D_from_vector(buffer<T> const& arg, size_t size_1, size_t size_2);
 
 }
@@ -386,12 +426,7 @@ template <typename T> buffer2D<T>  operator/(buffer2D<T> const& a, float b)
     res.data = a.data/b;
     return res;
 }
-template <typename T> buffer2D<T>  operator/(float a, buffer2D<T> const& b)
-{
-    buffer2D<T> res(b.dimension);
-    res.data = a/b.data;
-    return res;
-}
+
 
 template <typename T>
 buffer2D<T> buffer2D_from_vector(buffer<T> const& arg, size_t size_1, size_t size_2)

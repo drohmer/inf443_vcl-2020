@@ -23,7 +23,9 @@ The majority of VCL structures and functions are aimed to be minimalistic withou
 The code contains two main parts:
 * The VCL library itself in `vcl/` directory - contains the helper functions and structures
 * Some example 3D scenes in `scenes/` directory. Each scene is fully defined in its subdirectory, and the switch between different scene is set using a keyword defined in `scene/current_scene.hpp` file.
+ * Link to [INF443 scenes exercises](https://imagecomputing.net/damien.rohmer/teaching/2019_2020/semester_2/INF443_graphique_3D/TD/02_graphique_3D/content/000_introduction/index.html)
 
+<br>
 
 <a name="Compilation"></a>
 ## Compile the library
@@ -51,9 +53,14 @@ You may edit the code using
 * QtCreator on Linux/MacOS: [Setting up and using QtCreator](doc/qtcreator.md)
 * Visual Studio on Windows
 
+<br>
 
 <a name="Usage"></a>
 ## Basic usage of VCL structures
+
+Note that a _still incomplete_ [Doxygen documentation is available online](https://imagecomputing.net/damien.rohmer/teaching/general/vcl_doc/html/).
+
+_You may also generate this documentation locally in calling Doxygen on the file `doc/config_doxygen`._
 
 
 <a name="vec"></a>

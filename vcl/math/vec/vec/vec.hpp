@@ -6,5 +6,8 @@
 
 
 namespace vcl {
+
+/** Special notation vec<N> refers to buffer_stack of N floating values */
 template <size_t N> using vec = buffer_stack<float,N>;
+
 }

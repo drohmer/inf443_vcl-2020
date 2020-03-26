@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <vector>
 #include <ostream>
 
@@ -13,72 +14,123 @@
 namespace vcl
 {
 
+/** \brief Dynamic-sized container for numerical data
+ *
+ * The buffer structure is a wrapper around an std::vector with additional convenient functionalities
+ * - Overloaded operators + - * / as well as common outputs
+ * - Strict bound checking with operator [] and () (unless VCL_NO_DEBUG is defined)
+ *
+ * Buffer follows the main syntax than std::vector
+ * Elements in a buffer sotred contiguously in memory (use std::vector internally)
+ *
+ */
 template <typename T>
 struct buffer
 {
+    /** Internal data stored as std::vector */
     std::vector<T> data;
 
-    buffer();
-    buffer(size_t size);
-    buffer(std::initializer_list<T> arg);
-    buffer(std::vector<T> const& arg);
+    /** \name Constructors
+     * \brief  Follows the syntax from std::vector */
+    ///@{
+    buffer();                             /**< Empty buffer - no elements */
+    buffer(size_t size);                  /**< Buffer with a given size */
+    buffer(std::initializer_list<T> arg); /**< Inline initialization using { } */
+    buffer(std::vector<T> const& arg);    /**< Direct initialization from std::vector */
+    ///@}
 
+
+    /** Container size similar to vector.size() */
     size_t size() const;
+    /** Resize container to a new size (similar to vector.resize()) */
     void resize(size_t size);
+    /** Add an element at the end of the container (similar to vector.push_back()) */
     void push_back(T const& value);
+    /** Remove all elements of the container, new size is 0 (similar to vector.clear()) */
     void clear();
+    /** Fill the container with the same element (from index 0 to size-1) */
     void fill(T const& value);
 
+    /** \name Element access
+     * \brief  Allows buffer[i], buffer(i), and buffer.at(i)
+     * Bound checking is performed unless VCL_NO_DEBUG is defined. */
+    ///@{
     T const& operator[](size_t index) const;
     T & operator[](size_t index);
     T const& operator()(size_t index) const;
     T & operator()(size_t index);
-    T const& at(size_t index) const;
-    T & at(size_t index);
+    T const& at(size_t index) const; /**< Internal call to std::vector.at */
+    T & at(size_t index);            /**< Internal call to std::vector.at */
+    ///@}
 
+    /** \name Iterators
+     * \brief  Iterators on buffer are compatible with STL syntax
+     * allows "forall" loops (for(auto& e : buffer) {...}) */
+    ///@{
     typename std::vector<T>::iterator begin();
     typename std::vector<T>::iterator end();
     typename std::vector<T>::const_iterator begin() const;
     typename std::vector<T>::const_iterator end() const;
     typename std::vector<T>::const_iterator cbegin() const;
     typename std::vector<T>::const_iterator cend() const;
+    ///@}
 };
 
-
+/** Display all elements of the buffer. \relates buffer */
 template <typename T> std::ostream& operator<<(std::ostream& s, buffer<T> const& v);
+
+/** Convert all elements of the buffer to a string.
+ * \param buffer: the input buffer
+ * \param separator: the separator between each element
+ * \relates buffer*/
 template <typename T> std::string to_string(buffer<T> const& v, std::string const& separator=" ");
 
-template <typename T1, typename T2> bool is_equal(buffer<T1> const& a, buffer<T2> const& b);
-template <typename T> bool is_equal(buffer<T> const& a, buffer<T> const& b);
 
+/** \name Equality check
+ * \brief   Check equality (element by element) between two buffers.
+ * Buffers with different size are always considered as not equal.
+ * Only approximated equality is performed for comprison with float (absolute value between floats) */
+///@{
+/** Allows to check value equality between different type (float and int for instance). \relates buffer */
+template <typename T1, typename T2> bool is_equal(buffer<T1> const& a, buffer<T2> const& b);
+/** \relates buffer */
+template <typename T> bool is_equal(buffer<T> const& a, buffer<T> const& b);
+///@}
+
+/** Compute average value of all elements of the buffer. \relates buffer */
 template <typename T> T average(buffer<T> const& a);
 
+
+/** \name Math operators
+ * \brief Common mathematical operations between buffers, and scalar or element values. */
+///@{
+
+/** \relates buffer */
 template <typename T> buffer<T>  operator-(buffer<T> const& a);
 
-template <typename T> buffer<T>& operator+=(buffer<T>& a, buffer<T> const& b);
-template <typename T> buffer<T>& operator+=(buffer<T>& a, T const& b);
-template <typename T> buffer<T>  operator+(buffer<T> const& a, buffer<T> const& b);
-template <typename T> buffer<T>  operator+(buffer<T> const& a, T const& b);
-template <typename T> buffer<T>  operator+(T const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator+=(buffer<T>& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator+=(buffer<T>& a, T const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator+(buffer<T> const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator+(buffer<T> const& a, T const& b); /**< Componentwise sum: a[i]+b */
+/** \relates buffer */ template <typename T> buffer<T>  operator+(T const& a, buffer<T> const& b); /**< Componentwise sum: a+b[i] */
 
-template <typename T> buffer<T>& operator-=(buffer<T>& a, buffer<T> const& b);
-template <typename T> buffer<T>& operator-=(buffer<T>& a, T const& b);
-template <typename T> buffer<T>  operator-(buffer<T> const& a, buffer<T> const& b);
-template <typename T> buffer<T>  operator-(buffer<T> const& a, T const& b);
-template <typename T> buffer<T>  operator-(T const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator-=(buffer<T>& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator-=(buffer<T>& a, T const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator-(buffer<T> const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator-(buffer<T> const& a, T const& b); /**< Componentwise substraction: a[i]-b */
+/** \relates buffer */ template <typename T> buffer<T>  operator-(T const& a, buffer<T> const& b); /**< Componentwise substraction: a-b[i] */
 
-template <typename T> buffer<T>& operator*=(buffer<T>& a, buffer<T> const& b);
-template <typename T> buffer<T>  operator*(buffer<T> const& a, buffer<T> const& b);
-template <typename T> buffer<T>& operator*=(buffer<T>& a, float b);
-template <typename T> buffer<T>  operator*(buffer<T> const& a, float b);
-template <typename T> buffer<T>  operator*(float a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator*=(buffer<T>& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator*(buffer<T> const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator*=(buffer<T>& a, float b);
+/** \relates buffer */ template <typename T> buffer<T>  operator*(buffer<T> const& a, float b);
+/** \relates buffer */ template <typename T> buffer<T>  operator*(float a, buffer<T> const& b);
 
-template <typename T> buffer<T>& operator/=(buffer<T>& a, buffer<T> const& b);
-template <typename T> buffer<T>& operator/=(buffer<T>& a, float b);
-template <typename T> buffer<T>  operator/(buffer<T> const& a, buffer<T> const& b);
-template <typename T> buffer<T>  operator/(buffer<T> const& a, float b);
-template <typename T> buffer<T>  operator/(float a, buffer<T> const& b);
-
+/** \relates buffer */ template <typename T> buffer<T>& operator/=(buffer<T>& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>& operator/=(buffer<T>& a, float b);
+/** \relates buffer */ template <typename T> buffer<T>  operator/(buffer<T> const& a, buffer<T> const& b);
+/** \relates buffer */ template <typename T> buffer<T>  operator/(buffer<T> const& a, float b);
+///@}
 
 }
 
@@ -412,14 +464,7 @@ template <typename T> buffer<T>  operator/(buffer<T> const& a, float b)
     res /= b;
     return res;
 }
-template <typename T> buffer<T>  operator/(float a, buffer<T> const& b)
-{
-    size_t const N = b.size();
-    buffer<T> res(N);
-    for(size_t k=0; k<N; ++k)
-        res[k] = a/b[k];
-    return res;
-}
+
 
 
 template <typename T1, typename T2> bool is_equal(buffer<T1> const& a, buffer<T2> const& b)

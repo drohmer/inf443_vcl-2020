@@ -6,13 +6,17 @@
 namespace vcl
 {
 
-/** Represent an affine transformation defined by a translation, rotation, scaling (isotropic and anisotropic)
+/** \brief Represent an affine transformation defined by a translation, rotation, scaling (isotropic and anisotropic)
+ *
+ * The equivalent internal storage is computed as the 4x4 matrix:
+ * \verbatim
  *
  * (    scaling * rotation  | translation )
  * (                        |             )
  * (________________________|____________ )
  * (            0           |     1       )
  *
+ * \endverbatim
  *
  *  The associated transformation T is such that p'=T(p), with
  *  p' = scaling * scaling_axis * rotation * p + translation
@@ -27,6 +31,7 @@ struct affine_transform {
                      const float scaling=1.0f,
                      const vec3& scaling_axis={1.0f,1.0f,1.0f});
 
+
     /** Translation (x,y,z) */
     vec3 translation;
     /** Rotation matrix 3x3 */
@@ -40,7 +45,10 @@ struct affine_transform {
     mat4 matrix() const;
 };
 
-/** Composition between two affine transformation (correspond to the multiplication of their respective matrix) */
+/** Composition between two affine transformation.
+ *  Corresponds to the multiplication of their respective matrix.
+ *  \relates affine_transform
+ */
 affine_transform operator*(const affine_transform& T1, const affine_transform& T2);
 
 }
