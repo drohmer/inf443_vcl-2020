@@ -24,6 +24,8 @@ namespace vcl
  *  - rotation: 3x3 rotation matrix
  *  - scaling: 3x3 diagonal matrix Id*scaling
  *  - scaling_axis: 3x3 diagonal matrix [sx,0,0; 0,sy,0; 0,0,sz]
+ *
+ * \ingroup math
 */
 struct affine_transform {
     affine_transform(const vec3& translation={0,0,0},
@@ -48,6 +50,7 @@ struct affine_transform {
 /** Composition between two affine transformation.
  *  Corresponds to the multiplication of their respective matrix.
  *  \relates affine_transform
+ *  \ingroup math
  */
 affine_transform operator*(const affine_transform& T1, const affine_transform& T2);
 

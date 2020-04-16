@@ -2,7 +2,12 @@
 
 #include <string>
 
-
+// Macro to handle erros in VCL
+//
+// - assert_vcl( condition, error message )
+// - assert_vcl_no_msg( condition )
+// - error_vcl( error message )
+//
 
 namespace vcl
 {

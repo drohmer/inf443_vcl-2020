@@ -21,6 +21,7 @@ void scene_model::setup_data(std::map<std::string,GLuint>& shaders, scene_struct
     // Set the connectivity (quadrangle made of two triangles)
     quadrangle.connectivity = {{0,1,2}, {0,2,3}};
 
+
     // Transfert mesh onto GPU (ready to be displayed)
     // *************************************** //
 

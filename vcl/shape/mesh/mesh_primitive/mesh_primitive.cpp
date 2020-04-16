@@ -160,7 +160,7 @@ mesh mesh_primitive_torus(float R, float r, const vec3& center, const vec3& axis
 
             const vec3 d_theta = {-r*std::sin(theta)*std::cos(phi), -r*std::sin(theta)*std::sin(phi), r*std::cos(theta)};
             const vec3 d_phi   = {-(R+r*std::cos(theta))*std::sin(phi), (R+r*std::cos(theta))*std::cos(phi), 0};
-            const vec3 n = normalize(cross(d_theta,d_phi));
+            const vec3 n = normalize(cross(d_phi,d_theta));
 
             const vec2 uv = {u,v};
 
@@ -198,7 +198,8 @@ mesh mesh_primitive_cone(float radius,  const vec3& p1, const vec3& p2, size_t N
 
             const vec3 p0 = {x,y,z};
             const vec3 p = R*p0+p1;
-            const vec3 normal_d = R*vec3{x,y,0.0f};
+
+            const vec3 normal_d = R * vec3(std::sin(theta), std::cos(theta), radius/L);
             const float normal_n = norm(normal_d);
             vec3 n = normal_d;
             if( normal_n>1e-6f )

@@ -4,11 +4,15 @@
 
 namespace vcl {
 
-/** vec4 is an alias on the generic buffer_stack<float, 4> */
+/** vec4 is an alias on the generic buffer_stack<float, 4>
+ *  \ingroup math
+*/
 using vec4 = buffer_stack<float, 4>;
 
 /** vec4 models a lightweight (x,y,z,w) 4D coordinates vector or point.
- * vec4 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=4 */
+ * vec4 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=4
+ * \ingroup math
+*/
 template <> struct buffer_stack<float, 4> {
 
     // Public attributes:

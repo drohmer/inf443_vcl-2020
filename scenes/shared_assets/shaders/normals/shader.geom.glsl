@@ -2,7 +2,7 @@
 #version 330
 
 layout (triangles) in;
-layout (line_strip, max_vertices=9) out;
+layout (line_strip, max_vertices=3) out;
 
 in struct vertex_data
 {
@@ -29,6 +29,7 @@ void main(void)
     EmitVertex();
     gl_Position = M*vertex[0].position ;
     EmitVertex();
+
 
     EndPrimitive();
 }

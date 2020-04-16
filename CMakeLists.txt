@@ -40,5 +40,6 @@ target_link_libraries(pgm glfw dl -static-libstdc++)
 endif()
 
 if(WIN32)
+    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files}) # Allow to explore source directories as a tree
     target_link_libraries(pgm ${GLFW_LIBRARIES})
 endif()

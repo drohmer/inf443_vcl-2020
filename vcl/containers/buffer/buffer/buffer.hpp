@@ -7,9 +7,9 @@
 #include "vcl/base/base.hpp"
 #include <iostream>
 
-/** ************************************************** **/
-/**           Header                                   **/
-/** ************************************************** **/
+/* ************************************************** */
+/*           Header                                   */
+/* ************************************************** */
 
 namespace vcl
 {
@@ -23,6 +23,7 @@ namespace vcl
  * Buffer follows the main syntax than std::vector
  * Elements in a buffer sotred contiguously in memory (use std::vector internally)
  *
+ * \ingroup container
  */
 template <typename T>
 struct buffer
@@ -76,13 +77,15 @@ struct buffer
     ///@}
 };
 
-/** Display all elements of the buffer. \relates buffer */
+/** Display all elements of the buffer. \relates buffer \ingroup container */
 template <typename T> std::ostream& operator<<(std::ostream& s, buffer<T> const& v);
 
 /** Convert all elements of the buffer to a string.
  * \param buffer: the input buffer
  * \param separator: the separator between each element
- * \relates buffer*/
+ * \relates buffer
+ * \ingroup container
+*/
 template <typename T> std::string to_string(buffer<T> const& v, std::string const& separator=" ");
 
 
@@ -91,7 +94,7 @@ template <typename T> std::string to_string(buffer<T> const& v, std::string cons
  * Buffers with different size are always considered as not equal.
  * Only approximated equality is performed for comprison with float (absolute value between floats) */
 ///@{
-/** Allows to check value equality between different type (float and int for instance). \relates buffer */
+/** Allows to check value equality between different type (float and int for instance). \relates buffer \ingroup container */
 template <typename T1, typename T2> bool is_equal(buffer<T1> const& a, buffer<T2> const& b);
 /** \relates buffer */
 template <typename T> bool is_equal(buffer<T> const& a, buffer<T> const& b);
@@ -105,7 +108,7 @@ template <typename T> T average(buffer<T> const& a);
  * \brief Common mathematical operations between buffers, and scalar or element values. */
 ///@{
 
-/** \relates buffer */
+/** \relates buffer \ingroup container */
 template <typename T> buffer<T>  operator-(buffer<T> const& a);
 
 /** \relates buffer */ template <typename T> buffer<T>& operator+=(buffer<T>& a, buffer<T> const& b);
@@ -136,9 +139,9 @@ template <typename T> buffer<T>  operator-(buffer<T> const& a);
 
 
 
-/** ************************************************** **/
-/**           IMPLEMENTATION                           **/
-/** ************************************************** **/
+/* ************************************************** */
+/*           IMPLEMENTATION                           */
+/* ************************************************** */
 
 namespace vcl
 {

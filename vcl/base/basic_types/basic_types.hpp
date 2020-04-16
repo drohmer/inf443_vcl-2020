@@ -5,24 +5,26 @@
 namespace vcl
 {
 
-bool is_equal(int a, int b);
-bool is_equal(unsigned int a, unsigned int b);
-bool is_equal(size_t a, size_t b);
-bool is_equal(float a, float b);
-bool is_equal(double a, double b);
+/** \ingroup math
+ * @{
+*/
+bool is_equal(int a, int b);                    /**< a==b */
+bool is_equal(unsigned int a, unsigned int b);  /**< a==b */
+bool is_equal(size_t a, size_t b);              /**< a==b */
+bool is_equal(float a, float b);                /**< |a-b|<epsilon */
+bool is_equal(double a, double b);              /**< |a-b|<epsilon */
 
 
-constexpr size_t size(int a);
-constexpr size_t size(unsigned int a);
-constexpr size_t size(unsigned long a);
-constexpr size_t size(float a);
-constexpr size_t size(double a);
+constexpr size_t size(int a);                   /**< 1 */
+constexpr size_t size(unsigned int a);          /**< 1 */
+constexpr size_t size(unsigned long a);         /**< 1 */
+constexpr size_t size(float a);                 /**< 1 */
+constexpr size_t size(double a);                /**< 1 */
 
-
-
-
-
+/** max(min(x, x_max), x_min) */
 template <typename T1, typename T2> T1 clamp(T1 x, T2 x_min, T2 x_max);
+
+/** @} */
 
 }
 

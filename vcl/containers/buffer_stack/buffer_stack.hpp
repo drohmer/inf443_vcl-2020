@@ -8,7 +8,9 @@ namespace vcl
 
 /** Base class for small fixed-size vectors (vec3, mat3, etc.).
  * buffer_stack structure is a generic fixed-size vector, essentially equivalent to a std::array.
- * In addition to std::array syntax, buffer_stack provides extra convenient functions for numerical vectors */
+ * In addition to std::array syntax, buffer_stack provides extra convenient functions for numerical vectors
+ * \ingroup container
+*/
 template <typename T, size_t N>
 struct buffer_stack
 {
@@ -49,13 +51,14 @@ struct buffer_stack
 };
 
 
-/** Display all elements of the buffer. \relates buffer_stack */
+/** Display all elements of the buffer. \relates buffer_stack \ingroup container */
 template <typename T, size_t N> std::ostream& operator<<(std::ostream& s, buffer_stack<T,N> const& v);
 
 /** Convert all elements of the buffer to a string.
  * \param buffer: the input buffer
  * \param separator: the separator between each element
- * \relates buffer_stack*/
+ * \relates buffer_stack
+ * \ingroup container */
 template <typename T, size_t N> std::string to_string(buffer_stack<T,N> const& v, std::string const& separator=" ");
 
 /** \name Equality check
@@ -63,19 +66,19 @@ template <typename T, size_t N> std::string to_string(buffer_stack<T,N> const& v
  * Buffers with different size are always considered as not equal.
  * Only approximated equality is performed for comprison with float (absolute value between floats) */
 ///@{
-/** \relates buffer_stack */
+/** \relates buffer_stack \ingroup container */
 template <typename T1, typename T2, size_t N1, size_t N2> bool is_equal(buffer_stack<T1,N1> const& a, buffer_stack<T2,N2> const& b);
 /** \relates buffer_stack */
 template <typename T, size_t N> bool is_equal(buffer_stack<T,N> const& a, buffer_stack<T,N> const& b);
 ///@}
 
-/** Compute average value of all elements of the buffer. \relates buffer_stack */
+/** Compute average value of all elements of the buffer. \relates buffer_stack \ingroup container */
 template <typename T, size_t N> T average(buffer_stack<T,N> const& a);
 
 /** \name Math operators
  * \brief Common mathematical operations between buffers, and scalar or element values. */
 ///@{
-/** \relates buffer_stack */
+/** \relates buffer_stack \ingroup container */
 template <typename T, size_t N> buffer_stack<T,N>  operator-(buffer_stack<T,N> const& a);
 
 /** \relates buffer_stack */
@@ -128,9 +131,9 @@ template <typename T, size_t N> buffer_stack<T,N>  operator/(float a, buffer_sta
 
 
 
-/** ******************************************* **/
-/**           Template implementation           **/
-/** ******************************************* **/
+/***********************************************/
+/*           Template implementation           */
+/***********************************************/
 
 
 

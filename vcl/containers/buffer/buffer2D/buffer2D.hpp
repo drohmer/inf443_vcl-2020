@@ -5,9 +5,9 @@
 #include "vcl/base/base.hpp"
 
 
-/** ************************************************** **/
-/**           Header                                   **/
-/** ************************************************** **/
+/* ************************************************** */
+/*           Header                                   */
+/* ************************************************** */
 
 namespace vcl
 {
@@ -16,6 +16,8 @@ namespace vcl
  *
  * The buffer2D structure provide convenient access for 2D-grid organization where an element can be queried as buffer2D(i,j).
  * Elements of buffer2D are stored contiguously in memory and remain fully compatible with std::vector and pointers.
+ *
+ * \ingroup container
  */
 template <typename T>
 struct buffer2D
@@ -78,19 +80,22 @@ struct buffer2D
     ///@}
 };
 
-/** Display all elements of the buffer. \relates buffer */
+/** Display all elements of the buffer. \relates buffer \ingroup container */
 template <typename T> std::ostream& operator<<(std::ostream& s, buffer2D<T> const& v);
 
 /** Convert all elements of the buffer to a string.
  * \param buffer: the input buffer
  * \param separator: the separator between each element
- * \relates buffer*/
+ * \relates buffer
+ * \ingroup container */
 template <typename T> std::string to_string(buffer2D<T> const& v, std::string const& separator=" ");
 
 /** \name Math operators
  * \brief Common mathematical operations between buffers, and scalar or element values. */
 ///@{
-/** \relates buffer */ template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, buffer2D<T> const& b);
+/** \relates buffer \ingroup container */
+template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, buffer2D<T> const& b);
+
 /** \relates buffer */ template <typename T> buffer2D<T>& operator+=(buffer2D<T>& a, T const& b);
 /** \relates buffer */ template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, buffer2D<T> const& b);
 /** \relates buffer */ template <typename T> buffer2D<T>  operator+(buffer2D<T> const& a, T const& b);
@@ -117,6 +122,7 @@ template <typename T> std::string to_string(buffer2D<T> const& v, std::string co
 /** Direct build a buffer2D from a given 1D-buffer and its 2D-dimension
  * \note: the size of the 1D-buffer must satisfy arg.size = size_1 * size_2
  * \relates buffer
+ * \ingroup container
 */
 template <typename T> buffer2D<T> buffer2D_from_vector(buffer<T> const& arg, size_t size_1, size_t size_2);
 
@@ -124,9 +130,9 @@ template <typename T> buffer2D<T> buffer2D_from_vector(buffer<T> const& arg, siz
 
 
 
-/** ************************************************** **/
-/**           IMPLEMENTATION                           **/
-/** ************************************************** **/
+/* ************************************************** */
+/*           IMPLEMENTATION                           */
+/* ************************************************** */
 
 namespace vcl
 {

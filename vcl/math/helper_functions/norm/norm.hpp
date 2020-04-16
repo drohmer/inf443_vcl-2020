@@ -8,7 +8,7 @@ namespace vcl
 /** \name Dot product
  * \f$a\cdot b = \sum_i a_i\,b_i\f$ */
 ///@{
-/** \relates buffer_stack */
+/** \relates buffer_stack \ingroup math */
 template <size_t N> float dot(buffer_stack<float,N> const& a, buffer_stack<float,N> const& b);
 /** \relates buffer_stack */
 template <size_t N> float dot(buffer_stack<double,N> const& a, buffer_stack<double,N> const& b);
@@ -17,7 +17,7 @@ template <size_t N> float dot(buffer_stack<double,N> const& a, buffer_stack<doub
 /** \name Norm
  * Standard Euclidian norm: \f$\|v\|=\sqrt{\sum v_i^2}\f$ */
 ///@{
-/** \relates buffer_stack */
+/** \relates buffer_stack  ingroup math */
 template <size_t N> float norm(const buffer_stack<float,N>& v);
 /** \relates buffer_stack */
 template <size_t N> double norm(const buffer_stack<double,N>& v);
@@ -27,7 +27,7 @@ template <size_t N> double norm(const buffer_stack<double,N>& v);
 /** \name Normalize
  * \f$\mbox{normalize}(v)=v/\|v\|\f$ */
 ///@{
-/** \relates buffer_stack */
+/** \relates buffer_stack \ingroup math */
 template <size_t N> buffer_stack<float,N> normalize(const buffer_stack<float,N>& v);
 /** \relates buffer_stack */
 template <size_t N> buffer_stack<double,N> normalize(const buffer_stack<double,N>& v);

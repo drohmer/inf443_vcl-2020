@@ -6,23 +6,42 @@
 
 #include "../basic_types/basic_types.hpp"
 
+// Helper functions with respect to string handling and conversion
+
 namespace vcl
 {
 
+/** Convert a generic type to a string */
 template <typename T> std::string str(const T& x);
+/** Convert a generic type to a string */
 template <typename T> std::string to_string(const T& x);
+
+/** add zeros in from of the string */
 std::string zero_fill(const std::string& input, size_t number_of_zero);
 
+/** Export content of std::array into a string
+ * \ingroup container
+*/
 template <typename T, size_t N>
 std::string to_string(std::array<T,N> v, const std::string& separator=" ");
+
+/** Export content of std::vector into a string
+ * \ingroup container
+*/
 template <typename T>
 std::string to_string(std::vector<T> v, const std::string& separator=" ");
+
+/** Allows to call to_string on itself */
 std::string to_string(std::string const& s);
+/** Allows to call to_string a C-string */
 std::string to_string(char const* s);
 
+/** Check equality between string (using ==) */
 bool is_equal(std::string const& a, std::string const& b);
 
 namespace detail{
+
+/** Generic template function to export string from a container */
 template <typename T>
 std::string to_string_container(T const& v, const std::string& separator=" ");
 }

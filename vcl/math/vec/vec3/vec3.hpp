@@ -2,13 +2,20 @@
 
 #include "vcl/containers/buffer_stack/buffer_stack.hpp"
 
+
+
 namespace vcl {
 
-/** vec3 is an alias on a generic buffer_stack<float, 3> */
+/** vec3 is an alias on a generic buffer_stack<float, 3>
+ *  \ingroup math
+*/
 using vec3 = buffer_stack<float, 3>;
 
 /** vec3 models a lightweight (x,y,z) 3D coordinates vector or point.
- * vec3 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=3 */
+ * vec3 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=3
+ * \ingroup math
+ * @{
+*/
 template <> struct buffer_stack<float, 3> {
 
     // Public attributes:
@@ -55,9 +62,15 @@ template <> struct buffer_stack<float, 3> {
 
 };
 
+/** \ingroup math
+ * @{
+ */
+
 /** Cross product between two vec3.
- * \relates buffer_stack<float,3> */
+ * \relates buffer_stack<float,3>
+*/
 vec3 cross(const vec3& a,const vec3& b);
 
+/** @} */
 
 }

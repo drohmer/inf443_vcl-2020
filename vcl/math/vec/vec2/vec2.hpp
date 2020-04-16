@@ -2,13 +2,17 @@
 
 #include "vcl/containers/buffer_stack/buffer_stack.hpp"
 
+
 namespace vcl {
 
-/** vec2 is an alias on a generic buffer_stack<float, 2> */
+/** vec2 is an alias on a generic buffer_stack<float, 2>
+ *  \ingroup math */
 using vec2 = buffer_stack<float, 2>;
 
 /** vec2 models a lightweight (x,y) 2D coordinates vector or point.
- * vec2 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=2 */
+ * vec2 is a specialized-template class from a generic buffer_stack<type,N>, with type=float and N=2
+ * \ingroup math
+ */
 template <> struct buffer_stack<float, 2> {
 
     float x; /**< x-coordinate or vec2[0]  */

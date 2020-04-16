@@ -144,8 +144,10 @@ In addition to the file hierarchy from the left panel, you can use `CTRL+left cl
 ## Common issue to load a project with QtCreator
 
 
-When QtCreator fails to load your project it is often caused by conflicting temporary files.
+When QtCreator fails to load your project it is often caused by conflicting temporary files. <br>
+In some other cases the project may load but the executable file is not found.
 
+<br>
 
 * Everytime QtCreator load a project, it generates temporary files
   * CMakeListst.txt.user (in the current directory)

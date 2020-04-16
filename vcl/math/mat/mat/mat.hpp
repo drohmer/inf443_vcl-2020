@@ -11,59 +11,124 @@
 
 namespace vcl {
 
+/** \brief Matrix class following GLSL notations
+ *
+ * mat are small fixed-size matrix with floats elements stored in std::array
+ * mat<N1,N2> are expected to work seamlessly with vec<N>
+ * Specialized version of mat2, mat3, mat4 are provided to match GLSL conventions.
+ *
+ * Template parameters:
+ * - N1: Number of rows
+ * - N2: Number of columns
+ *
+ * \ingroup math
+ */
 
 template <std::size_t N1, std::size_t N2>
 struct mat
 {
+    /** Internal data stored as std::array */
     std::array<float,N1*N2> data;
 
+    /** Generate an identity matrix. Or a diagonal of one in case of non-squared matrix.*/
     static mat identity();
 
-    std::size_t size() const;
-    std::size_t size1() const;
-    std::size_t size2() const;
+    std::size_t size() const;  /**< Total number of elements N1*N2 */
+    std::size_t size1() const; /**< Total number of row */
+    std::size_t size2() const; /**< Total number of columns */
 
-    vec<N1> row(std::size_t offset) const;
-    vec<N2> col(std::size_t offset) const;
-    mat<N1,N2>& set_row(std::size_t offset, const vec<N1>& v);
-    mat<N1,N2>& set_col(std::size_t offset, const vec<N2>& v);
+
+    vec<N1> row(std::size_t offset) const; /**< Acces to a given row (copy to vec<N1>)*/
+    vec<N2> col(std::size_t offset) const; /**< Acces to a given column (copy to vec<N2>)*/
+    mat<N1,N2>& set_row(std::size_t offset, const vec<N1>& v); /**< Set a given row */
+    mat<N1,N2>& set_col(std::size_t offset, const vec<N2>& v); /**< Set a given column */
+
+    /** \name Element access
+     * \brief  Allows buffer(x,y) access, or direct 1D-offset-indexing buffer[i].
+     * Bound checking is performed unless VCL_NO_DEBUG is defined. */
+    ///@{
+    const float& operator()(std::size_t index1, std::size_t index2) const;
+    float& operator()(std::size_t index1, std::size_t index2);
 
     const float& operator[](std::size_t offset) const;
     float& operator[](std::size_t offset);
-
-    const float& operator()(std::size_t index1, std::size_t index2) const;
-    float& operator()(std::size_t index1, std::size_t index2);
+    ///@}
 
 };
 
 
+
+
+/** \name Math operators
+ * \brief Common mathematical operations between mat and vector.
+*/
+///@{
+
+/** Matrix multiplication. \relates mat \ingroup math */
 template <std::size_t N1, std::size_t N2, std::size_t N3> mat<N1,N3> operator*(const mat<N1,N2>& a, const mat<N2,N3>& b);
+/** Matrix vector multiplication. \relates mat */
 template <std::size_t N1, std::size_t N2> vec<N1> operator*(const mat<N1,N2>& a, const vec<N2>& b);
 
-template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator+=(mat<N1,N2>& a, const mat<N1,N2>& b);
-template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator-=(mat<N1,N2>& a, const mat<N1,N2>& b);
-template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator*=(mat<N1,N2>& a, float b);
-template <std::size_t N1, std::size_t N2>
-mat<N1,N2>& operator/=(mat<N1,N2>& a, const float b);
 
+/** \relates mat */
+template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator+=(mat<N1,N2>& a, const mat<N1,N2>& b);
+/** \relates mat */
+template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator-=(mat<N1,N2>& a, const mat<N1,N2>& b);
+/** \relates mat */
+template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator*=(mat<N1,N2>& a, float b);
+/** \relates mat */
+template <std::size_t N1, std::size_t N2> mat<N1,N2>& operator/=(mat<N1,N2>& a, const float b);
+
+/** \relates mat */
 template <std::size_t N1, std::size_t N2> mat<N1,N2> operator+(const mat<N1,N2>& a, const mat<N1,N2>& b);
+/** \relates mat */
 template <std::size_t N1, std::size_t N2> mat<N1,N2> operator-(const mat<N1,N2>& a, const mat<N1,N2>& b);
+/** \relates mat */
 template <std::size_t N1, std::size_t N2> mat<N1,N2> operator*(const mat<N1,N2>& a, float b);
+/** \relates mat */
 template <std::size_t N1, std::size_t N2> mat<N1,N2> operator*(float a, const mat<N1,N2>& b);
 
+/** \relates mat */
 template <std::size_t N1, std::size_t N2> mat<N1,N2> operator-(const mat<N1,N2>& a);
 
-template <std::size_t N1, std::size_t N2>
-mat<N1,N2> operator/(const mat<N1,N2>& a, const float b);
+/** \relates mat */
+template <std::size_t N1, std::size_t N2> mat<N1,N2> operator/(const mat<N1,N2>& a, const float b);
+///@}
 
+
+/** Matrix transpose. \relates mat \ingroup math */
+template <std::size_t N> mat<N,N> transpose(const mat<N,N>& m);
+
+
+/** \name Display mat
+ * \brief Ways to display a mat, or convert it to string. */
+///@{
+/** Convert a mat to string, displayable as a 2D structure. \relates mat \ingroup math */
 template <std::size_t N1, std::size_t N2> std::string to_string_mat(const mat<N1,N2>& v, const std::string& element_separator=", ", const std::string& line_separator="\n", const std::string& line_start="(", const std::string& line_end=")");
+/** Convert a mat to string as a 1D structure. \relates mat */
 template <std::size_t N1, std::size_t N2> std::string to_string(const mat<N1,N2>& v, const std::string& separator=" ");
+/** Default matrix display on the terminal. \relates mat */
 template <std::size_t N1, std::size_t N2> std::ostream& operator<<(std::ostream& s, const mat<N1,N2>& v);
+///@}
 
+/** Check (approximate) equality between two mat. \relates mat \ingroup math */
 template <std::size_t N1, std::size_t N2> bool is_equal(const mat<N1,N2>& a, const mat<N1,N2>& b);
 
-template <std::size_t N>
-mat<N,N> transpose(const mat<N,N>& m);
+
+
+}
+
+
+
+
+
+/* ************************************************** */
+/*           IMPLEMENTATION                           */
+/* ************************************************** */
+
+namespace vcl{
+
+
 
 template <std::size_t N1, std::size_t N2>
 vec<N1> mat<N1,N2>::row(std::size_t offset) const
