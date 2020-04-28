@@ -2,6 +2,7 @@
 
 #include "main/scene_base/base.hpp"
 
+
 #ifdef SCENE_EXAMPLE_PERLIN
 
 // Stores some parameters that can be set from the GUI

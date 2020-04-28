@@ -50,7 +50,6 @@ void scene_model::frame_draw(std::map<std::string,GLuint>& shaders, scene_struct
 
 
 
-
 }
 
 
